@@ -3,17 +3,31 @@
 An event-driven analytics pipeline that automatically scores device financing 
 applications and delivers structured underwriting recommendations via email.
 
+## What It Does
+
+When a new financing application is added to the source CSV, the pipeline automatically:
+
+1. **Detects the file change** — Python watches the CSV every 10 seconds
+2. **Runs the full dbt pipeline** — seed → run → 12 data quality tests
+3. **Scores the new application** — queries segment benchmarks from the mart, calls Claude via API
+4. **Emails a structured underwriting report** — delivered to the underwriter's inbox within ~60 seconds
+
+No manual intervention required. Add a row, get an email.
+
 ## Architecture
 ```
-CSV updated (new application)
+CSV updated (new application row added)
         ↓
-Python pipeline detects file change
+Python pipeline detects file change (polls every 10 seconds)
         ↓
-dbt seed → run → test (12 data quality tests)
+dbt seed → dbt run → dbt test (12 data quality tests must pass)
         ↓
-Claude (via OpenRouter) reasons about risk
+Agent queries mart for segment benchmarks
+        ↓
+Claude reasons about risk profile vs benchmarks
         ↓
 Structured underwriting report emailed automatically
+```
 ```
 
 ## Tech Stack
