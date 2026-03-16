@@ -28,7 +28,6 @@ Claude reasons about risk profile vs benchmarks
         ↓
 Structured underwriting report emailed automatically
 ```
-```
 
 ## Tech Stack
 
@@ -39,13 +38,13 @@ Structured underwriting report emailed automatically
 
 ## dbt Pipeline
 ```
-seeds/device_financing_messy.csv     ← raw synthetic data (2,028 rows, 19 features)
+seeds/device_financing_messy.csv          ← raw synthetic data (2,028 rows, 19 features)
         ↓
-models/staging/stg_device_financing  ← standardize, nullify invalid values, quality flags
+models/staging/stg_device_financing       ← standardize, nullify invalid values, quality flags
         ↓
 models/intermediate/int_device_financing_enriched  ← feature engineering, imputation, risk scoring
         ↓
-models/marts/mart_device_risk        ← aggregated segment benchmarks
+models/marts/mart_device_risk             ← aggregated segment benchmarks
 ```
 
 ### Data Quality
@@ -56,7 +55,7 @@ The raw dataset intentionally contains real-world messiness:
 - Duplicate rows (~2%)
 - Future-dated application entries
 
-The staging layer handles all of this with nullify-and-flag logic — bad values 
+The staging layer handles all of this with nullify-and-flag logic — bad values
 are nulled out and companion quality flag columns record *why* they were nulled.
 
 ### Feature Engineering (Intermediate Layer)
@@ -67,7 +66,7 @@ are nulled out and companion quality flag columns record *why* they were nulled.
 - `has_prior_default` — boolean default history flag
 - `is_experienced_lessee` — prior lease completion signal
 - `device_value_tier` — premium / mid_range / budget
-- Segment-average imputation for missing credit score, DTI, income, utilization
+- Segment-average imputation for missing credit score, DTI, income, and utilization
 
 ### dbt Tests (12 total)
 - `unique` and `not_null` on application_id
@@ -77,7 +76,7 @@ are nulled out and companion quality flag columns record *why* they were nulled.
 
 ## Underwriting Agent
 
-The agent pulls segment benchmarks from the mart and passes them alongside 
+The agent pulls segment benchmarks from the mart and passes them alongside
 application details to Claude, which returns a structured JSON recommendation:
 ```json
 {
@@ -89,6 +88,56 @@ application details to Claude, which returns a structured JSON recommendation:
   "conditions": ["..."],
   "suggested_action": "..."
 }
+```
+
+This JSON is then formatted into a human-readable report and delivered via email.
+
+## Sample Output
+```
+=================================================================
+  FRAGILE DEVICE FINANCING — UNDERWRITING REPORT
+=================================================================
+  Application ID : APP-01841
+  Device         : iPhone 13 ($599 MSRP)
+  Lease Term     : 36 months @ $19.77/mo
+  Applicant      : POOR credit | Score: 476
+  Employment     : unemployed | Income: $730/mo
+  DTI Ratio      : 0.521 * | Risk Score: 2.4/3.0
+
+  SEGMENT BENCHMARKS:
+  Comparable apps     : 22
+  Segment default rate: 40.9%
+  Avg credit score    : 452
+
+  DECISION: DECLINED (Confidence: High)
+─────────────────────────────────────────────────────────────────
+  RISK SUMMARY:
+  Unacceptable risk — unemployed with very low income ($730/mo),
+  two prior defaults, and composite risk score of 2.4 significantly
+  exceeds the segment average of 1.55.
+
+  POSITIVE FACTORS:
+    • Monthly payment of $19.77 represents only 2.7% of stated income
+    • One prior lease successfully completed
+    • Credit utilization at 60% is below segment average of 73.5%
+
+  RISK FACTORS:
+    • Unemployed with no verifiable income source
+    • Two prior defaults indicating pattern of non-payment
+    • Credit score of 476 is extremely low
+    • Segment default rate of 40.9% confirms high-risk pool
+
+  CONDITIONS:
+    • Obtain stable employment with income above $2,000/mo
+    • Provide co-signer with credit score above 650
+    • Increase down payment to 30% ($180)
+
+  SUGGESTED ACTION:
+  Decline — advise applicant to reapply once employed with
+  stable income and a co-signer.
+
+  * = imputed value (original was missing)
+=================================================================
 ```
 
 ## Setup
@@ -119,15 +168,18 @@ dbt test
 python pipeline.py
 ```
 
-5. Add a new row to `data/device_financing_messy.csv` — the pipeline will 
+5. Add a new row to `data/device_financing_messy.csv` — the pipeline will
 automatically detect the change, run dbt, score the application, and email the report.
 
-## Project Context
+## Production Mapping
 
-Built as a portfolio project demonstrating the analytics engineering stack 
-used at hardware financing companies. The architecture mirrors production 
-systems where:
-- CSV/file changes → database sensor (Dagster)
-- DuckDB → Snowflake
-- Local orchestration → Dagster pipeline
-- Synthetic device data → real device financing applications
+This project is designed to mirror production analytics engineering workflows
+at hardware financing companies:
+
+| This Project | Production Equivalent |
+|---|---|
+| CSV file change | New application row in Snowflake |
+| Python file watcher | Dagster sensor |
+| DuckDB | Snowflake |
+| Local dbt run | Dagster-orchestrated dbt job |
+| Gmail SMTP | Slack / internal notification system |
