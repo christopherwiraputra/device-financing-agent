@@ -1,0 +1,22 @@
+# environment variables — never upload
+.env
+
+# duckdb database files
+*.duckdb
+*.duckdb.wal
+
+# dbt compiled files
+dbt_project/device_financing/target/
+dbt_project/device_financing/logs/
+dbt_project/device_financing/.user.yml
+
+# python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# tracker file
+data/last_processed.txt
+
+# VS Code
+.vscode/

@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_device_financing
+    description: 'Cleaned and standardized device financing applications. Removes duplicates, fixes casing, nullifies invalid values.'
+    columns:
+      - name: application_id
+        description: 'Unique application identifier.'
+        tests:
+          - unique
+          - not_null
+      - name: device_type
+        description: 'Standardized device type.'
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['iPhone 14', 'iPhone 13', 'Samsung Galaxy S23', 'Samsung Galaxy S22', 'iPad Pro', 'MacBook Air', 'Dell XPS 13', 'Microsoft Surface Pro']
+      - name: credit_tier
+        description: 'Standardized credit tier.'
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['excellent', 'good', 'fair', 'poor']
+      - name: lease_term_months
+        description: 'Lease term cleaned to 12, 24, or 36 months only.'
+        tests:
+          - accepted_values:
+              arguments:
+                values: [12, 24, 36]
+      - name: employment_type
+        description: 'Standardized employment type.'
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['full_time', 'part_time', 'self_employed', 'student', 'unemployed']

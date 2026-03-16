@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: mart_device_risk
+    description: 'Aggregated risk benchmarks by credit tier, device type, and lease term. Powers the underwriting agent.'
+    columns:
+      - name: credit_tier
+        description: 'Standardized credit tier.'
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['excellent', 'good', 'fair', 'poor']
+      - name: device_type
+        description: 'Standardized device type.'
+        tests:
+          - not_null
+      - name: total_applications
+        description: 'Total applications in this segment.'
+        tests:
+          - not_null
+      - name: default_rate
+        description: 'Observed default rate for this segment.'
+        tests:
+          - not_null
