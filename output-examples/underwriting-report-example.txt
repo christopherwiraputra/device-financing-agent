@@ -1,0 +1,49 @@
+FRAGILE DEVICE FINANCING — AUTOMATED UNDERWRITING REPORT
+Generated: 2026-03-17 13:48:18
+=================================================================
+Last known row count: 2001 | Current row count: 2002
+Scoring newest application: APP-88889...
+
+=================================================================
+  FRAGILE DEVICE FINANCING — UNDERWRITING REPORT
+=================================================================
+  Application ID : APP-88889
+  Device         : Samsung Galaxy S22 ($649 MSRP)
+  Lease Term     : 12 months @ $34.38/mo
+  Applicant      : FAIR credit | Score: 710.0
+  Employment     : full_time | Income: $2450.0/mo
+  DTI Ratio      : 0.289  | Risk Score: 0.8/3.0
+
+  SEGMENT BENCHMARKS:
+  Comparable apps  : 2
+  Segment default rate: 0.0%
+  Avg credit score : 710.0
+
+  DECISION: ⚠️ CONDITIONAL APPROVAL (Confidence: Medium)
+─────────────────────────────────────────────────────────────────
+  RISK SUMMARY:
+  Applicant shows moderate risk with a fair credit score of 710 and reasonable DTI of 28.9%, but has one prior default which raises concerns. Strong payment history with 5 completed leases demonstrates reliability, though the previous default cannot be ignored for a moderate-risk tier application.
+
+  POSITIVE FACTORS:
+    • Strong lease completion history with 5 prior leases successfully completed
+    • Credit score of 710 is solid for fair credit tier
+    • DTI ratio of 28.9% is manageable and within acceptable range
+    • Credit utilization at 28% shows responsible credit management
+    • Full-time employment provides stable income source
+    • Monthly payment of $34.38 represents only 1.4% of monthly income
+
+  RISK FACTORS:
+    • One prior default in payment history indicates previous financial difficulty
+    • Composite risk score of 0.8 places applicant in moderate-risk tier
+    • Limited segment benchmark data (only 2 comparable applications) reduces confidence in comparison
+    • Monthly income of $2,450 is relatively modest with limited financial cushion
+
+  CONDITIONS:
+    • Require 20% down payment ($129.80) to reduce exposure and demonstrate commitment
+    • Obtain written explanation of prior default circumstances and evidence of resolution
+    • Verify current employment and income with recent pay stubs (last 2 months)
+  SUGGESTED ACTION:
+  Approve with conditions requiring down payment and default explanation to mitigate risk from prior default while leveraging strong completion history.
+
+  * = imputed value (original was missing)
+=================================================================
