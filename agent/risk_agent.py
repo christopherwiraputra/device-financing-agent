@@ -249,6 +249,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-con = duckdb.connect(DBT_DB_PATH, read_only=True)
-con.execute("USE main") 

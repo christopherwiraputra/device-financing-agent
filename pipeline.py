@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ─── CONFIG ───────────────────────────────────────────────────
-CSV_PATH    = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\data\device_financing_messy.csv"
+CSV_PATH = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\dbt_project\device_financing\seeds\device_financing_messy.csv"
 DBT_DIR     = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\dbt_project\device_financing"
 DBT_DB_PATH = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\dbt_project\device_financing.duckdb"
 
@@ -100,7 +100,6 @@ def send_email(subject, body):
         print(f"[Pipeline] Email failed: {e}")
 
 
-
 def main():
     print("="*65)
     print("  FRAGILE DEVICE FINANCING — PIPELINE ORCHESTRATOR")
@@ -122,22 +121,21 @@ def main():
             # step 1: run dbt
             dbt_success = run_dbt()
 
+            # FIX: don't try to send a report if dbt failed — just log and skip
             if not dbt_success:
-                subject = f"Fragile Underwriting Report — New Applications Processed"
-                body = build_email_body(reports)
-                send_email(subject, body)
+                print("[Pipeline] dbt failed — skipping scoring and email for this cycle.")
                 continue
 
-            # step 2: score applications via subprocess
+            # step 2: score new applications via subprocess
             reports = score_applications()
 
             if not reports:
                 print("[Pipeline] No reports generated.")
                 continue
 
-            # step 3: send email
-            subject = f"Fragile Underwriting Report — New Applications Processed"
-            body = f"FRAGILE DEVICE FINANCING — AUTOMATED UNDERWRITING REPORT\nGenerated: {time.strftime('%Y-%m-%d %H:%M:%S')}\n{'='*65}\n\n" + "\n".join(reports)
+            # step 3: send email using the shared helper so formatting is consistent
+            subject = "Fragile Underwriting Report — New Applications Processed"
+            body = build_email_body(reports)
             send_email(subject, body)
 
         else:

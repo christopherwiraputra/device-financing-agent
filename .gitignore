@@ -27,4 +27,7 @@ dbt_project/device_financing/logs/
 
 # accidental files
 dbt_project/device_financing/0
-dbt_project/device_financing/current_date
+dbt_project/device_financing/current_date/
+
+
+Agent Ideas B2B.txt
