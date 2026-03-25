@@ -171,15 +171,3 @@ python pipeline.py
 5. Add a new row to `data/device_financing_messy.csv` — the pipeline will
 automatically detect the change, run dbt, score the application, and email the report.
 
-## Production Mapping
-
-This project is designed to mirror production analytics engineering workflows
-at hardware financing companies:
-
-| This Project | Production Equivalent |
-|---|---|
-| CSV file change | New application row in Snowflake |
-| Python file watcher | Dagster sensor |
-| DuckDB | Snowflake |
-| Local dbt run | Dagster-orchestrated dbt job |
-| Gmail SMTP | Slack / internal notification system |
