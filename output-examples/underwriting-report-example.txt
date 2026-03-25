@@ -1,11 +1,11 @@
-FRAGILE DEVICE FINANCING — AUTOMATED UNDERWRITING REPORT
+DEVICE FINANCING — AUTOMATED UNDERWRITING REPORT
 Generated: 2026-03-17 13:48:18
 =================================================================
 Last known row count: 2001 | Current row count: 2002
 Scoring newest application: APP-88889...
 
 =================================================================
-  FRAGILE DEVICE FINANCING — UNDERWRITING REPORT
+        DEVICE FINANCING — UNDERWRITING REPORT
 =================================================================
   Application ID : APP-88889
   Device         : Samsung Galaxy S22 ($649 MSRP)

@@ -174,6 +174,7 @@ dbt test
 python agent/pipeline.py
 ```
 
+
 5. Add a new row to the source CSV — the pipeline will automatically detect 
 the change, run dbt, score the application, and email the report.
 
