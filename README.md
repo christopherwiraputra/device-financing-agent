@@ -168,6 +168,6 @@ dbt test
 python pipeline.py
 ```
 
-5. Add a new row to `data/device_financing_messy.csv` — the pipeline will
+5. Add a new row to `dbt_project/device_financing/seeds/device_financing_messy.csv` — the pipeline will
 automatically detect the change, run dbt, score the application, and email the report.
 
