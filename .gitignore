@@ -23,7 +23,6 @@ data/last_processed.txt
 
 # dbt logs
 dbt_project/logs/
-dbt_project/device_financing/logs/
 
 # accidental files
 dbt_project/device_financing/0

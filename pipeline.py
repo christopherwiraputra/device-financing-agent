@@ -11,9 +11,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ─── CONFIG ───────────────────────────────────────────────────
-CSV_PATH = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\dbt_project\device_financing\seeds\device_financing_messy.csv"
-DBT_DIR     = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\dbt_project\device_financing"
-DBT_DB_PATH = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\dbt_project\device_financing.duckdb"
+CSV_PATH = os.getenv("CSV_PATH")
+DBT_DIR     = os.getenv("DBT_DIR")
+DBT_DB_PATH = os.getenv("DBT_DB_PATH")
 
 GMAIL_SENDER    = os.getenv("GMAIL_SENDER")
 GMAIL_PASSWORD  = os.getenv("GMAIL_APP_PASSWORD")
@@ -55,7 +55,7 @@ def score_applications():
     """Call batch_score.py as a subprocess."""
     print("[Pipeline] Scoring new applications...")
 
-    scorer = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\agent\batch_score.py"
+    scorer = os.getenv("SCORER_PATH")
     result = subprocess.run(
         ["py", scorer],
         capture_output=True,

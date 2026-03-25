@@ -4,15 +4,15 @@ import duckdb
 import os
 import time
 
-sys.path.append(r"C:\Users\HP\Desktop\USC\Projects\Device Agent")
+
 
 from dotenv import load_dotenv
 load_dotenv()
-
+sys.path.append(os.getenv("PROJECT_ROOT"))
 from agent.risk_agent import get_segment_benchmarks, call_claude, format_report
 
-DBT_DB_PATH  = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\dbt_project\device_financing.duckdb"
-TRACKER_PATH = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\data\last_processed.txt"
+DBT_DB_PATH  = os.getenv("DBT_DB_PATH")
+TRACKER_PATH = os.getenv("TRACKER_PATH")
 
 
 def get_last_row_count():

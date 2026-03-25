@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-DBT_DB_PATH = r"C:\Users\HP\Desktop\USC\Projects\Device Agent\dbt_project\device_financing.duckdb"
+DBT_DB_PATH = os.getenv("DBT_DB_PATH")
 
 
 def get_segment_benchmarks(con, device_type, credit_tier, lease_term_months):
